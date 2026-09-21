@@ -2,3 +2,6 @@
 *.gif
 *.png
 __pycache__/
+
+# Personal permission grants, not for anyone who clones this
+.claude/settings.local.json

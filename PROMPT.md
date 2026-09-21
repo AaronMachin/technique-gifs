@@ -5,6 +5,15 @@ Audience: a software engineer here who has never used Claude Code and assumes it
 thing that writes code for you. Mildly sceptical. Will watch it self-serve in a
 Confluence page or a Slack post, half-attending, with no sound.
 
+## Start from the renderer that exists
+
+    git clone https://github.com/AaronMachin/technique-gifs
+    brew install vhs ffmpeg
+
+`render.py` already holds the drawing primitives: the prompt line, tool bullets,
+streamed text, the annotation bar, the spinner. Copy `demo.py` and change the beats,
+point `session.tape` at your copy, then `make gif`. Do not rewrite the styling.
+
 ## Find the technique first
 
 My transcripts are one .jsonl per session, one folder per working directory, under
@@ -16,7 +25,8 @@ evidence taken out, and the evidence is the whole point. Go to the transcripts a
 work out what actually happened, including the bit where the first output was wrong.
 
 The technique is the reusable mechanism underneath, not the ticket. Write it as one
-sentence before you go any further. If you cannot, you have not found it yet.
+sentence before you go any further, and make that sentence say what it saves me or
+stops going wrong. If you cannot write it, you have not found it yet.
 
 ## Write the script, show me, wait
 
@@ -26,7 +36,7 @@ beat give me the literal text that will be on screen. Include:
 - the prompt I actually sent, or a tightened version of it
 - a real sample of what came back, enough to show the mechanism working
 - the moment it was wrong, or the moment I corrected it, if there was one
-- annotations that say what just happened and why it matters
+- annotations that say what just happened
 - a closing frame that is the literal line someone can paste into their own prompt
 
 End the script with a short list of the judgement calls you made that I might overrule.
@@ -53,14 +63,13 @@ with me only if something is major.
 
 ## Then build it
 
-Stack, all already installed: a Python script that prints the beats with ANSI colour
-and controlled timing, vhs to record a real terminal running it, ffmpeg to encode.
-Output both a .gif and an .mp4. Keep the .gif under about 1MB.
+Reconstruct the session, do not capture one. Running the real Claude CLI inside the
+recorder takes real minutes, gives you whatever it says that day, and puts live repo
+content in every frame for you to vet. Say in your handover that it is staged and
+which details you invented.
 
-Do not run the real Claude CLI inside the recorder. It takes real minutes, you get
-whatever it says that day, and every frame is live repo content you then have to vet.
-Reconstruct the output instead. Tell me in your handover that it is a reconstruction
-and which details are invented.
+Output a .gif and an .mp4. Keep the .gif under about 1MB and the whole thing under
+about 70 seconds.
 
 ## Traps, all of which cost me time
 
@@ -70,6 +79,19 @@ and which details are invented.
   loudest on screen is what people leave with.
 - Every beat is too fast on the first pass. Roughly double what feels right. A GIF has
   no scrubber, so anything unreadable is only recoverable by waiting for the whole loop.
+- Never write an annotation that tells the viewer something is significant. I cut
+  '"todo.md please" is a real answer' for being both AI-sounding and useless. Say what
+  happened. If it is not obviously significant once said plainly, the beat is wrong,
+  not the caption.
+- The payoff has to be the working benefit, in plain words. I had "twenty-two findings
+  became three", which sounds good and is not the point. The point was that answering
+  the whole list in one message stops things drifting or getting quietly dropped.
+  Compressed numbers are a substitute for saying what actually improves.
+- After any recut, re-check that every number on screen still follows from what is
+  shown. "Five of the eight agents found these independently" survived a cut that had
+  already removed the eight agents, so it referred to nothing.
+- Anything shorthand on screen must be set up before it is used. "todo.md please" only
+  reads as a decision because the prompt shown earlier said what todo.md is for.
 - Colour exactly one thing: whatever carries the idea. Everything else stays neutral.
 - Do not draw the input box progressively. It renders broken mid-typing. Use the
   scrollback form, "> " and the text.
@@ -86,6 +108,4 @@ and which details are invented.
 
 Read my CLAUDE.md and write everything, including the on-screen text, the way I write.
 UK English. Plain. No em-dashes. Nothing that sounds like it was written to be
-motivating. Annotations that assert a thing is significant ("X is a real answer") are
-the failure mode to watch for. Say what happened and let it be significant on its own.
-Sentences of different lengths, not a run of matched pairs.
+motivating. Sentences of different lengths, not a run of matched pairs.
